@@ -1,0 +1,39 @@
+---
+- name: Configure OPS445 VM for labs
+  hosts: vmlab
+  become: yes
+  gather_facts: yes
+
+  vars:
+    seneca_id: ocoji
+    ssh_pub_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO6aOjU7qRX7D3In5FCJZ7ssnXpA7ZRIW+dcQb6WMTMR ocoji@ocoji"
+
+  tasks:
+    - name: Install EPEL repository if not present
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Update/upgrade httpd (Apache) to latest available
+      yum:
+        name: httpd
+        state: latest
+      notify: restart httpd
+
+    - name: Ensure tree package is absent (remove if installed)
+      yum:
+        name: tree
+        state: absent
+
+    - name: Set the hostname to the Seneca ID
+      hostname:
+        name: "{{ seneca_id }}"
+
+    - name: Create the Seneca user and add to wheel group
+      user:
+        name: "{{ seneca_id }}"
+        comment: "OPS445 student account"
+        shell: /bin/bash
+        groups: wheel
+        state: present
+        create_home: yes

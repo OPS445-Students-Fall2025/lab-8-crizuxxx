@@ -1,0 +1,24 @@
+
+PLAY [Configure OPS445 VM for labs] ********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [vmlab]
+
+TASK [Install EPEL repository if not present] **********************************
+ok: [vmlab]
+
+TASK [Update/upgrade httpd (Apache) to latest available] ***********************
+ok: [vmlab]
+
+TASK [Ensure tree package is absent (remove if installed)] *********************
+ok: [vmlab]
+
+TASK [Set the hostname to the Seneca ID] ***************************************
+ok: [vmlab]
+
+TASK [Create the Seneca user and add to wheel group] ***************************
+ok: [vmlab]
+
+PLAY RECAP *********************************************************************
+vmlab                      : ok=6    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
